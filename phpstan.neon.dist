@@ -1,0 +1,18 @@
+parameters:
+    level: 7
+    paths:
+        - src
+        - tests
+    earlyTerminatingMethodCalls:
+        PHPUnit\Framework\TestCase:
+            - markTestSkipped
+    ignoreErrors:
+        -
+            message: '#Call to an undefined method Petfinder\\Tests\\Api\\TestApi::foo\(\)#'
+            path: tests/Api/AbstractApiTest.php
+        -
+            message: '#Access to an undefined property Petfinder\\Client::\$test#'
+            path: tests/ClientTest.php
+
+includes:
+    - vendor/phpstan/phpstan-phpunit/extension.neon
