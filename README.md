@@ -22,7 +22,7 @@ In addition to the Petfinder package, you'll need an [HTTPlug](http://docs.php-h
 client that support async requests. We recommend using `php-http/guzzle6-adapter`,
 but you are free to use whatever one works for you.
 
-    composer require petfinder/petfinder-php php-http/guzzle6-adapter
+    composer require petfinder-com/petfinder-php php-http/guzzle6-adapter
 
 ## Usage
 
