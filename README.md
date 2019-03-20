@@ -2,6 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/petfinder-com/petfinder-php-sdk.svg?style=shield)](https://circleci.com/gh/petfinder-com/petfinder-php-sdk)
 [![packagist version](https://img.shields.io/packagist/v/petfinder-com/petfinder-php.svg)](https://packagist.org/packages/petfinder-com/petfinder-php)
+[![Coverage Status](https://coveralls.io/repos/github/petfinder-com/petfinder-php-sdk/badge.svg?branch=feature%2Fcoveralls)](https://coveralls.io/github/petfinder-com/petfinder-php-sdk?branch=feature%2Fcoveralls)
 
 A simple wrapper for the Petfinder API, written in PHP.
 
