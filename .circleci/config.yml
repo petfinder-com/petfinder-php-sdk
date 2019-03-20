@@ -16,11 +16,14 @@ jobs:
           key: composer-v1-{{ checksum "composer.json" }}
           paths:
             - vendor
-      - run: vendor/bin/phpunit --colors=never --log-junit results.xml --coverage-html coverage
+      - run: rm -rf build
+      - run: mkdir build
+      - run: vendor/bin/phpunit --colors=never --log-junit build/results.xml --coverage-html build/coverage --coverage-clover build/clover.xml
       - run: vendor/bin/php-cs-fixer fix -v --dry-run --using-cache=no
       - run: vendor/bin/phpstan analyse --no-progress
+      - run: vendor/bin/php-coveralls -x build/clover.xml -o build/coveralls.json || true
       - store_artifacts:
-          path: coverage
+          path: build/coverage
           prefix: coverage
       - store_test_results:
-          path: results.xml
+          path: build/results.xml
