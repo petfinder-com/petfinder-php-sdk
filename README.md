@@ -1,5 +1,8 @@
 # Petfinder PHP SDK
 
+[![CircleCI](https://circleci.com/gh/petfinder-com/petfinder-php-sdk.svg?style=shield)](https://circleci.com/gh/petfinder-com/petfinder-php-sdk)
+[![packagist version](https://img.shields.io/packagist/v/petfinder-com/petfinder-php.svg)](https://packagist.org/packages/petfinder-com/petfinder-php)
+
 A simple wrapper for the Petfinder API, written in PHP.
 
 Uses [Petfinder API v2](https://www.petfinder.com/developers/v2/docs/).
