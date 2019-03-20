@@ -1,0 +1,26 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/php:7.3
+    working_directory: ~/petfinder-php
+    steps:
+      - checkout
+      - run: sudo composer self-update
+      - restore_cache:
+          keys:
+            - composer-v1-{{ checksum "composer.lock" }}
+            - composer-v1-
+      - run: composer install --prefer-dist --optimize-autoloader --no-progress --no-interaction
+      - save_cache:
+          key: composer-v1-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+      - run: vendor/bin/phpunit --colors=never --log-junit results.xml --coverage-html coverage
+      - run: vendor/bin/php-cs-fixer fix -v --dry-run --using-cache=no
+      - run: vendor/bin/phpstan analyse --no-progress
+      - store_artifacts:
+          path: build/coverage
+          prefix: coverage
+      - store_test_results:
+          path: results.xml
