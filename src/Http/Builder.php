@@ -44,6 +44,7 @@ class Builder
     ) {
         $this->http = $httpClient ?? HttpAsyncClientDiscovery::find();
         $this->requestFactory = $requestFactory ?? MessageFactoryDiscovery::find();
+        $this->headers['User-Agent'] = 'petfinder-php-sdk/v1.0 (https://github.com/petfinder-com/petfinder-php-sdk)';
     }
 
     public function getHttpClient(): HttpAsyncClient
