@@ -120,7 +120,7 @@ class BuilderTest extends TestCase
         $this->builder->getHttpClient()->sendAsyncRequest(new Request('GET', '/test'));
         $this->assertEquals('bar', $this->http->getLastRequest()->getHeaderLine('X-Foo'));
         $this->assertEquals('foo', $this->http->getLastRequest()->getHeaderLine('X-Bar'));
-        $this->assertEquals('petfinder-php-sdk/v1.0 (https://github.com/petfinder-com/petfinder-php-sdk)', $this->http->getLastRequest()->getHeaderLine('User-Agent'));
+        $this->assertEquals('petfinder-php-sdk/v1.0 (https://github.com/petfinder-com/petfinder-php-sdk)', $this->http->getLastRequest()->getHeaderLine('X-Api-Sdk'));
 
         $this->builder->addHeaders(['X-Baz' => 'baz']);
 
