@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  install:
     docker:
       - image: circleci/php:7.3
     working_directory: ~/petfinder-php
@@ -16,14 +16,57 @@ jobs:
           key: composer-v1-{{ checksum "composer.json" }}
           paths:
             - vendor
-      - run: rm -rf build
-      - run: mkdir build
-      - run: vendor/bin/phpunit --colors=never --log-junit build/results.xml --coverage-html build/coverage --coverage-clover build/clover.xml
+      - persist_to_workspace:
+          root: .
+          paths:
+            - vendor
+  lint:
+    docker:
+      - image: circleci/php:7.3
+    working_directory: ~/petfinder-php
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
       - run: vendor/bin/php-cs-fixer fix -v --dry-run --using-cache=no
       - run: vendor/bin/phpstan analyse --no-progress
+  test-php73:
+    docker:
+      - image: circleci/php:7.3
+    working_directory: ~/petfinder-php
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: vendor/bin/phpunit --colors=never --log-junit build/phpunit/results73.xml --coverage-html build/coverage --coverage-clover build/clover.xml
       - run: vendor/bin/php-coveralls -x build/clover.xml -o build/coveralls.json || true
       - store_artifacts:
           path: build/coverage
           prefix: coverage
       - store_test_results:
-          path: build/results.xml
+          path: build
+  test-php72:
+    docker:
+      - image: circleci/php:7.2
+    working_directory: ~/petfinder-php
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: vendor/bin/phpunit --colors=never --log-junit build/phpunit/results72.xml
+      - store_test_results:
+          path: build
+workflows:
+  version: 2
+  test:
+    jobs:
+      - install
+      - lint:
+          requires:
+            - install
+      - test-php73:
+          requires:
+            - install
+      - test-php72:
+          requires:
+            - install
